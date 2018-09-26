@@ -8,69 +8,93 @@ public class main {
 		int position;
         position = in.nextInt();
         
-        main L = new main();
-        int col = 0;
-        int p;
+        main C = new main();
         
-    	if(position == 0 || position == 1){
-    		if(position == 0)
-    			System.out.println("\r\nномер итерации = "+col);
+        int col = 0;
+        int p = 0;
+        
+    	C.min(C.combo(p, position, col));
+    	
+    	
+
+	}
+	
+	public void min(int[] arr){
+		int min;
+		if(arr.length == 1) min = 0;
+		else
+		min = 99999999;
+    	for (int j=1; j< arr.length; j++){
+    		if(arr[j] < min){
+    			min = arr[j];
+    		}
+    		
+    	}
+    	System.out.println("Минимальное число итераций = "+min);
+	}
+	
+	public int[] combo(int p,int position,int col){
+		int[] arr = new int[Math.abs(position)+1];
+		if(position == 0 || position == 1 || position == -1){
+    		if(position == 0){
+    			//System.out.println("\r\nномер итерации = "+0);
+    		}
     		else{
-    			System.out.print("A");
-    			System.out.println("\r\nномер итерации = "+col);
+    			if(position == 1){
+    				//System.out.print("A");
+        			//System.out.println("\r\nномер итерации = "+1);
+        			arr[1] = 1;
+    			}else{
+    				//System.out.print("RA");
+        			//System.out.println("\r\nномер итерации = "+2);
+        			arr[1] = 2;
+    			}
     		}
     	}else{
-    		if(position < 0){
+    		if(position < -1){
     			position *=-1;
-    			System.out.print("R");
+    			//System.out.print("R");
+    			col++;
     		}
-	        for(int v = 1; v < Math.abs(position); v=1+v*2){
-				if(Math.abs(position) >= v && Math.abs(position) <= 1+v*2){
-					p = Math.abs(position)-v;
-					if(Math.abs(position) == v)
-						L.a(1, 0, position, position, col);
-					else{
-						if(Math.abs(position)-v > 1+v*2-Math.abs(position)){
-							L.a(1, 0, position, position, col);
-						}else
-							 L.a(1, 0, p, position, col);
-						}
-					}
+    		arr[position] = 999999;
+    		for(int i = 1; i < position; i++){
+					p = i;
+					arr[i] = a(1, 0, p, position, col);
 			}
     	}
-       
-        
+		return arr;
 	}
-	public void a(int v, int curP, int position, int imaginary, int col){
-		
+	
+	public int a(int v, int curP, int position, int imaginary, int col){
 		if(((curP > position && v > 0) || (curP < position && v < 0) || Math.ceil(Math.abs(v/2)) >= Math.abs(position-curP)) && (Math.abs(position-curP) < Math.abs(position-(curP + v)))){
-			int k = v;
 				if(v>=0){
 					v=-1;
 				}else {
 					v=1;
 				}
 			col++;
-			System.out.print('R');
-			a(v, curP, position, imaginary, col);
-			
+			//System.out.print('R');
+			return a(v, curP, position, imaginary, col);
 		}else{
         	curP += v;
     		v *= 2;
     		col++;
-    		System.out.print("A");
+    		//System.out.print("A");
     		if(position == curP){
-    			if(position == curP &&  curP == imaginary)
-    			System.out.println("\r\nномер итерации = "+col);
+    			if(position == curP &&  curP == imaginary){
+    				//System.out.println("\r\nномер итерации = "+col);
+    				return col;
+    			}
     			else{
 	    			position = imaginary;
-	    			a(v, curP, position, imaginary, col);
+	    			return a(v, curP, position, imaginary, col);
 	    		}
-    		}else
-    		a(v, curP, position, imaginary, col);
+    		}else{
+    			return a(v, curP, position, imaginary, col);
+    		}
     	}
 		
-		
 	}
+	
 	
 }
